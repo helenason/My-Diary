@@ -1,9 +1,7 @@
 package diary.diaryspring.service;
 
 import diary.diaryspring.domain.Member;
-import diary.diaryspring.repository.MemberRepository;
-import diary.diaryspring.repository.MemoryMemberRepository;
-import org.springframework.stereotype.Service;
+import diary.diaryspring.repository.member.MemberRepository;
 
 import java.util.Optional;
 
@@ -17,12 +15,10 @@ public class MemberService {
     }
 
     public String join(Member member) { // 회원가입
-//        if (!checkSameId(member.getId())) {
+        if (!checkSameId(member.getId())) {
             mr.save(member);
             return member.getId();
-//        } else {
-//            return "";
-//        }
+        } else return "";
     }
 
     public boolean checkSameId(String id) { // 중복 ID 체크

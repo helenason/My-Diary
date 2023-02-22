@@ -1,7 +1,7 @@
 package diary.diaryspring.controller;
 
 import diary.diaryspring.domain.Member;
-import diary.diaryspring.repository.MemoryMemberRepository;
+import diary.diaryspring.repository.member.MemoryMemberRepository;
 import diary.diaryspring.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

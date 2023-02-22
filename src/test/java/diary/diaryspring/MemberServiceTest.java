@@ -1,8 +1,7 @@
 package diary.diaryspring;
 
 import diary.diaryspring.domain.Member;
-import diary.diaryspring.repository.MemberRepository;
-import diary.diaryspring.repository.MemoryMemberRepository;
+import diary.diaryspring.repository.member.MemoryMemberRepository;
 import diary.diaryspring.service.MemberService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +35,7 @@ public class MemberServiceTest {
         String resId = ms.join(member);
 
         //then
-        Member result = mr.findById(member.getId()).get();
+        Member result = mr.findById(resId).get();
         assertThat(result).isEqualTo(member);
     }
 
@@ -51,11 +50,15 @@ public class MemberServiceTest {
 
         //when
         ms.join(member1);
-//        String resId2 = ms.join(member2);
 
         //then
-        assertThatThrownBy(() -> { ms.join(member2); }).isInstanceOf(Exception.class)
+        String result = ms.join(member2);
+        assertThat(result).isEqualTo("");
+        /**
+        assertThatThrownBy(() -> { ms.join(member2); })
+                .isInstanceOf(Exception.class)
                 .hasMessageMatching("이미 존재하는 회원");
+         **/
     }
 
     @Test
@@ -70,7 +73,7 @@ public class MemberServiceTest {
         String result = ms.login(member.getId(), member.getPw());
 
         //then
-        assertThat(result).isEqualTo("로그인 성공");
+        assertThat(result).contains("님 환영합니다.");
     }
 
     @Test
@@ -82,9 +85,9 @@ public class MemberServiceTest {
 
         //when
         ms.join(member);
+        String result = ms.login(member.getId(), "other");
 
         //then
-        String result = ms.login("id", "other");
         assertThat(result).isEqualTo("비밀번호 체크");
     }
 

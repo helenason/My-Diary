@@ -1,7 +1,6 @@
-package diary.diaryspring.repository;
+package diary.diaryspring.repository.member;
 
 import diary.diaryspring.domain.Member;
-import org.springframework.stereotype.Repository;
 
 import java.util.*;
 

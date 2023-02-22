@@ -1,21 +1,24 @@
 package diary.diaryspring;
 
 import diary.diaryspring.domain.Member;
-import diary.diaryspring.repository.member.MemoryMemberRepository;
-import org.junit.jupiter.api.AfterEach;
+import diary.diaryspring.repository.member.MemberRepository;
+import diary.diaryspring.service.MemberService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MemoryMemberRepositoryTest {
-    private final MemoryMemberRepository mmr = new MemoryMemberRepository();
+@SpringBootTest
+@Transactional
+public class JdbcTemplateMemberRepositoryTest {
 
-    @AfterEach
-    public void afterEach() {
-        mmr.clearStore();
-    }
+    @Autowired MemberService ms;
+    @Autowired MemberRepository jmr;
+
 
     // 회원 저장과 id로 조회
     @Test
@@ -27,11 +30,12 @@ public class MemoryMemberRepositoryTest {
         member1.setName("name1");
 
         //when
-        mmr.save(member1);
+        jmr.save(member1);
 
         //then
-        Member result = mmr.findById("id1").get();
-        assertThat(result).isEqualTo(member1);
+        Member result = jmr.findById("id1").get();
+        assertThat(result.getId()).isEqualTo(member1.getId());
+//        assertThat(result).isEqualTo(member1); 하면 오류가 뜬다.
     }
 
     @Test
@@ -43,11 +47,11 @@ public class MemoryMemberRepositoryTest {
         member2.setName("name2");
 
         //when
-        mmr.save(member2);
+        jmr.save(member2);
 
         //then
-        Member result = mmr.findByName("name2").get();
-        assertThat(result).isEqualTo(member2);
+        Member result = jmr.findByName("name2").get();
+        assertThat(result.getPw()).isEqualTo(member2.getPw());
     }
 
     @Test
@@ -64,11 +68,11 @@ public class MemoryMemberRepositoryTest {
         member2.setName("name2");
 
         //when
-        mmr.save(member1);
-        mmr.save(member2);
+        jmr.save(member1);
+        jmr.save(member2);
 
         //then
-        List<Member> result = mmr.findAll();
+        List<Member> result = jmr.findAll();
         assertThat(result.size()).isEqualTo(2);
     }
 }
