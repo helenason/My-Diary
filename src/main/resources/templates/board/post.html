@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Board</title>
+</head>
+<body>
+<!--이 페이지의 주소는 /board/post?id=# 이 될 예정입니다. onclick 수정하기.-->
+  <form method="post">
+    <input type="button" name="button" value="수정" onclick="location.href = '/board/edit?id=#">
+    <input type="button" name="button" value="삭제">
+  </form>
+  <div th:object="${board}">
+    <h1 th:text="*{title}"></h1>
+    <h4 th:text="*{writer}"></h4>
+    <h4 th:text="*{date}"></h4>
+    <p th:text="*{content}"></p>
+  </div>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 package diary.diaryspring;
 
 import diary.diaryspring.domain.Member;
-import diary.diaryspring.repository.member.MemberRepository;
+import diary.diaryspring.repository.MemberRepository;
 import diary.diaryspring.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest

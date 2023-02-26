@@ -1,7 +1,7 @@
 package diary.diaryspring.service;
 
 import diary.diaryspring.domain.Member;
-import diary.diaryspring.repository.member.MemberRepository;
+import diary.diaryspring.repository.MemberRepository;
 
 import java.util.Optional;
 

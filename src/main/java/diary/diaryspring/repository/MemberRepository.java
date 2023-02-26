@@ -1,4 +1,4 @@
-package diary.diaryspring.repository.member;
+package diary.diaryspring.repository;
 
 import diary.diaryspring.domain.Member;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,19 +12,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class JdbcTemplateMemberRepository implements MemberRepository {
+public class MemberRepository {
 
     private final JdbcTemplate jt;
 
-    public JdbcTemplateMemberRepository(DataSource ds) {
+    public MemberRepository(DataSource ds) {
         this.jt = new JdbcTemplate(ds);
     }
 
-    @Override
     public Member save(Member member) {
-
-//        jt.update("INSERT INTO members(id, pw, name) VALUES(?, ?)",
-//                member.getId(), member.getPw(), member.getName());
 
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jt);
         jdbcInsert.withTableName("members");
@@ -40,22 +36,17 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
         return member;
     }
 
-    @Override
     public Optional<Member> findById(String id) {
         List<Member> result = jt
                 .query("SELECT * FROM members WHERE id = ?", memberRowMapper(), id);
-//        Member result = jt.queryForObject("SELECT * FROM members WHERE id = ?", memberRowMapper(), id);
-//        return Optional.ofNullable(result);
         return result.stream().findAny();
     }
 
-    @Override
     public Optional<Member> findByName(String name) {
         List<Member> result = jt.query("SELECT * FROM members WHERE name = ?", memberRowMapper(), name);
         return result.stream().findAny();
     }
 
-    @Override
     public List<Member> findAll() {
         return jt.query("SELECT * FROM members", memberRowMapper());
     }

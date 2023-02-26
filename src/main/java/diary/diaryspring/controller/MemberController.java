@@ -1,24 +1,26 @@
 package diary.diaryspring.controller;
 
 import diary.diaryspring.domain.Member;
-import diary.diaryspring.repository.member.MemoryMemberRepository;
+import diary.diaryspring.repository.MemberRepository;
 import diary.diaryspring.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 @RequestMapping("/members")
 public class MemberController {
 
-    MemoryMemberRepository mr = new MemoryMemberRepository();
-    MemberService ms = new MemberService(mr);
+    @Autowired MemberRepository mr;
+    @Autowired MemberService ms;
 
-    int pass;
-    boolean dupBtn;
-    boolean chkBtn;
-    String dupMsg;
-    String chkMsg;
+    private int pass;
+    private boolean dupBtn;
+    private boolean chkBtn;
+    private String dupMsg;
+    private String chkMsg;
 
     @GetMapping("/join")
     public String joinForm(Model model){ // 새로고침(F5)

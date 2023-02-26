@@ -1,7 +1,7 @@
 package diary.diaryspring;
 
 import diary.diaryspring.domain.Member;
-import diary.diaryspring.repository.member.MemberRepository;
+import diary.diaryspring.repository.MemberRepository;
 import diary.diaryspring.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

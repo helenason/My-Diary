@@ -1,29 +1,18 @@
 package diary.diaryspring;
 
 import diary.diaryspring.domain.Member;
-import diary.diaryspring.repository.member.MemoryMemberRepository;
+import diary.diaryspring.repository.MemberRepository;
 import diary.diaryspring.service.MemberService;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class MemberServiceTest {
 
-    MemberService ms;
-    MemoryMemberRepository mr;
-    
-    @BeforeEach
-    public void beforeEach() {
-        mr = new MemoryMemberRepository();
-        ms = new MemberService(mr);
-    }
-    @AfterEach
-    public void afterEach() {
-        mr.clearStore();
-    }
+    @Autowired MemberRepository mr;
+    @Autowired MemberService ms;
 
     @Test
     public void 회원가입() throws Exception {
