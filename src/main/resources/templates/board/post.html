@@ -5,15 +5,12 @@
   <title>Board</title>
 </head>
 <body>
-  <form th:action="@{/board/post}" method="post">
+<!--  <form th:action="@{/board/post/edit(id=${board.id})}" method="post">-->
     <input type="button" name="button" value="수정"
            th:onclick="|location.href='@{post/edit(id=${board.id})}'|">
-    <div th:with="chkErase=false">
-      <input type="button" name="button" value="삭제"
-             th:onclick="chkErase=confirmErase()">
-      <p th:if="${chkErase==true}">삭제되었습니다.</p>
-    </div>
-  </form>
+    <input type="button" name="button" value="삭제"
+           th:onclick="|location.href='@{post/erase(id=${board.id})}'|">
+<!--  </form>-->
   <div>
     <h1>[[${board.title}]]</h1>
     <h4>[[${board.writer}]]</h4>
@@ -22,13 +19,14 @@
   </div>
 
 </body>
-<script>
-  function confirmErase() {
-    if (confirm("정말 삭제하시겠습니까?") == true) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-</script>
+<!--<script>-->
+<!--  function confirmErase() {-->
+<!--    if (confirm("정말 삭제하시겠습니까?") == true) {-->
+<!--      document.querySelector("#erase").innerHTML += "<p>삭제되었습니다.<p>";-->
+<!--      return true;-->
+<!--    } else {-->
+<!--      return false;-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
 </html>

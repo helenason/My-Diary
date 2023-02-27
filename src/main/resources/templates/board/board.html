@@ -14,7 +14,7 @@
     </tr>
 
     <tr th:each="b, stat : ${boardList}"
-        th:onclick="|location.href='@{board/post(id=${b.id})}'|"
+        th:onclick="|location.href='@{/board/post(id=${b.id})}'|"
         style="cursor:pointer">
       <td th:text="${stat.count}"></td>
       <td th:text="${b.title}"></td>

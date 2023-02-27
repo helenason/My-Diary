@@ -10,11 +10,11 @@
   <form th:object="${board}" method="post">
     <label th:for="title">제목</label>
     <input type="text" th:field="*{title}"
-           th:value="${board.title}"><br> <!--*{title}-->
+           th:value="*{title}"><br>
 
     <label th:for="content">내용</label>
     <input type="text" th:field="*{content}"
-           th:value="${board.content}"><br>
+           th:value="*{content}"><br>
 
     <input type="submit" name="button" value="편집">
 

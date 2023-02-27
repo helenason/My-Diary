@@ -41,9 +41,7 @@ public class BoardController {
             bs.write(board);
             System.out.println("게시 성공");
         }
-        List<Board> boardList = br.findAll();
-        model.addAttribute("boardList", boardList);
-        return "board/board";
+        return "redirect:/board";
     }
 
     @GetMapping("/post")
@@ -55,19 +53,24 @@ public class BoardController {
 
         return "board/post";
     }
-    @PostMapping("/post")
-    public String postBoard(Model model,
-                            @RequestParam("id") int id,
-                            @RequestParam("button") String btn) {
-        model.addAttribute("id", id);
-        if (btn.equals("수정")) {
-            return "board/edit";
-        } else { // "삭제"
-            Board erasePost = br.findById(id).orElse(null);
-            bs.erase(erasePost);
-            return "";
-        }
-    }
+//    @PostMapping("/post")
+//    public String postBoard(Model model,
+//                            @RequestParam("id") int id,
+//                            @RequestParam("button") String btn) {
+//
+//
+//        model.addAttribute("id", id);
+//        if (btn.equals("수정")) {
+//            return "board/edit";
+//        } else { // "삭제"
+//            Board erasePost = br.findById(id).orElse(null);
+//            bs.erase(erasePost);
+//
+//            List<Board> boardList = br.findAll();
+//            model.addAttribute("boardList", boardList);
+//            return "redirect:/board";
+//        }
+//    }
 
     @GetMapping("/post/edit")
     public String editFrom(Model model,
@@ -89,5 +92,20 @@ public class BoardController {
         model.addAttribute("board", findPost);
 
         return "redirect:/board/post?id=" + Integer.toString(id);
+    }
+
+    @GetMapping("/post/erase")
+    public String eraseFrom() {
+        return "board/erase";
+    }
+    @PostMapping("/post/erase")
+    public String eraseBoard(@RequestParam("id") int id,
+                             @RequestParam("button") String btn) {
+        if (btn.equals("YES")) {
+            Board erasePost = br.findById(id).orElse(null);
+            bs.erase(erasePost);
+        }
+        return "redirect:/board";
+
     }
 }
