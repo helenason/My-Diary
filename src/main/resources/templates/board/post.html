@@ -5,17 +5,30 @@
   <title>Board</title>
 </head>
 <body>
-<!--이 페이지의 주소는 /board/post?id=# 이 될 예정입니다. onclick 수정하기.-->
-  <form method="post">
-    <input type="button" name="button" value="수정" onclick="location.href = '/board/edit?id=#">
-    <input type="button" name="button" value="삭제">
+  <form th:action="@{/board/post}" method="post">
+    <input type="button" name="button" value="수정"
+           th:onclick="|location.href='@{post/edit(id=${board.id})}'|">
+    <div th:with="chkErase=false">
+      <input type="button" name="button" value="삭제"
+             th:onclick="chkErase=confirmErase()">
+      <p th:if="${chkErase==true}">삭제되었습니다.</p>
+    </div>
   </form>
-  <div th:object="${board}">
-    <h1 th:text="*{title}"></h1>
-    <h4 th:text="*{writer}"></h4>
-    <h4 th:text="*{date}"></h4>
-    <p th:text="*{content}"></p>
+  <div>
+    <h1>[[${board.title}]]</h1>
+    <h4>[[${board.writer}]]</h4>
+    <h4>[[${board.date}]]</h4>
+    <p>[[${board.content}]]</p>
   </div>
 
 </body>
+<script>
+  function confirmErase() {
+    if (confirm("정말 삭제하시겠습니까?") == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+</script>
 </html>

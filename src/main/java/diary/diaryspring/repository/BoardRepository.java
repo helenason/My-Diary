@@ -32,24 +32,29 @@ public class BoardRepository {
         System.out.println(executeKey);
     }
 
-    public void update(Board oldBoard, Board newBoard) {
-        jt.query("UPDATE board SET title=?, content=? WHERE id = ?", boardRowMapper(),
-                newBoard.getTitle(), newBoard.getContent(), oldBoard.getId());
+    public void update(int id, String newTitle, String newContent) {
+        jt.update("UPDATE board SET title=?, content=? WHERE id = ?",
+                newTitle, newContent, id);
     }
 
     public void delete(Board board) {
-        jt.query("DELETE FROM board WHERE id = ?", boardRowMapper(), board.getId());
+        jt.update("DELETE FROM board WHERE id = ?", board.getId());
     }
 
-    public Optional<Board> findByWriter(String writer) {
-        List<Board> result = jt
-                .query("SELECT * FROM board WHERE writer = ?", boardRowMapper(), writer);
-        return result.stream().findAny();
+    public Optional<Board> findById(int id) {
+        Board result = jt.queryForObject("SELECT * FROM board WHERE id = ? ", boardRowMapper(), id);
+        return Optional.ofNullable(result);
     }
 
     public Optional<Board> findByTitle(String title) {
         List<Board> result = jt
                 .query("SELECT * FROM board WHERE title = ?", boardRowMapper(), title);
+        return result.stream().findAny();
+    }
+
+    public Optional<Board> findByWriter(String writer) {
+        List<Board> result = jt
+                .query("SELECT * FROM board WHERE writer = ?", boardRowMapper(), writer);
         return result.stream().findAny();
     }
 
@@ -61,6 +66,7 @@ public class BoardRepository {
         return (rs, rowNum) -> {
             Board board = new Board();
 
+            board.setId(rs.getInt("id"));
             board.setTitle(rs.getString("title"));
             board.setWriter(rs.getString("writer"));
             board.setContent(rs.getString("content"));

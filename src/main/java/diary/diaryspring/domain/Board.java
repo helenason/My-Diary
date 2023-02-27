@@ -51,4 +51,7 @@ public class Board {
         String formatNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.date = formatNow;
     }
+//    public void setDate(String date) {
+//        this.date = date;
+//    }
 }

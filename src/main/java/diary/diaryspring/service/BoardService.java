@@ -12,8 +12,8 @@ public class BoardService {
         return board;
     }
 
-    public void edit(Board oldBoard, Board newBoard) {
-        br.update(oldBoard, newBoard);
+    public void edit(int id, String newTitle, String newContent) {
+        br.update(id, newTitle, newContent);
     }
 
     public void erase(Board board) {

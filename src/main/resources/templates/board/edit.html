@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Board</title>
+</head>
+<body>
+  <h1>오늘의 일기 편집하기</h1>
+<!--  th:action="@{/board/post(id=${board.id})}"-->
+  <form th:object="${board}" method="post">
+    <label th:for="title">제목</label>
+    <input type="text" th:field="*{title}"
+           th:value="${board.title}"><br> <!--*{title}-->
+
+    <label th:for="content">내용</label>
+    <input type="text" th:field="*{content}"
+           th:value="${board.content}"><br>
+
+    <input type="submit" name="button" value="편집">
+
+  </form>
+</body>
+</html>
