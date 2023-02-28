@@ -3,10 +3,14 @@ package diary.diaryspring.controller;
 import diary.diaryspring.domain.Member;
 import diary.diaryspring.repository.MemberRepository;
 import diary.diaryspring.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @Controller
@@ -85,11 +89,22 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String loginMember(Model model, @ModelAttribute Member member) {
-        String m = ms.login(member.getId(), member.getPw());
-        model.addAttribute("message", m);
+    public String loginMember(Model model,
+                              HttpServletRequest request,
+                              @ModelAttribute Member member) {
+        String msg = ms.login(member.getId(), member.getPw());
+        model.addAttribute("message", msg);
+        if (msg.contains("님 환영합니다.")) {
+            // login session 설정
+            Member loginMem = mr.findById(member.getId()).orElse(null);
+
+            HttpSession session = request.getSession();
+            session.setAttribute("member", loginMem);
+        }
         return "members/login";
 
     }
+
+    //logout 구현
 }
 

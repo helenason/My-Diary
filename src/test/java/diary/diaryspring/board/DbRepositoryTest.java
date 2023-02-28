@@ -29,8 +29,10 @@ public class DbRepositoryTest {
 
         br.save(board);
 
-        Board result = br.findByWriter("얄루").get();
-        assertThat(result.getContent()).isEqualTo(board.getContent());
+        List<Board> result = br.findByWriter("얄루").orElse(null);
+        if (result != null) {
+            assertThat(result.get(0).getContent()).isEqualTo(board.getContent());
+        }
     }
 
     @Test

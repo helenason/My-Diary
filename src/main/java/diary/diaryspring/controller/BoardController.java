@@ -1,8 +1,11 @@
 package diary.diaryspring.controller;
 
 import diary.diaryspring.domain.Board;
+import diary.diaryspring.domain.Member;
 import diary.diaryspring.repository.BoardRepository;
 import diary.diaryspring.service.BoardService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,19 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
         return "board/board";
     }
+    @PostMapping("")
+    public String searchBoard(Model model,
+                              @RequestParam("searchType") String type,
+                              @RequestParam("search") String search) {
+        List<Board> result;
+        if (type.equals("제목")) {
+            result = br.findByTitle(search).orElse(null);
+        } else { // "글쓴이"
+            result = br.findByWriter(search).orElse(null);
+        }
+        model.addAttribute("boardList", result);
+        return "board/board";
+    }
 
     @GetMapping("/write")
     public String writeForm(Model model) {
@@ -33,11 +49,17 @@ public class BoardController {
 
     @PostMapping("/write")
     public String writeBoard(Model model,
+                           HttpServletRequest request,
+//                           HttpSession session,
                            @ModelAttribute Board board,
                            @RequestParam("button") String btn) {
         if (btn.equals("게시")) {
-            board.setWriter("수정예정");
+            HttpSession session = request.getSession();
+            Member member = (Member) session.getAttribute("member");
+
+            board.setWriter(member.getName());
             board.setDate();
+
             bs.write(board);
             System.out.println("게시 성공");
         }
