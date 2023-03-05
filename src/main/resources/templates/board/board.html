@@ -5,6 +5,8 @@
     <title>Board</title>
 </head>
 <body>
+  <p th:if="${account}" th:utext="|안녕하세요, ${account}님.|"></p>
+
   <form method="post">
     <input type="radio" name="searchType" id="title" value="제목">
     <label for="title">제목</label><br>

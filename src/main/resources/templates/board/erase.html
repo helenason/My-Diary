@@ -5,6 +5,8 @@
   <title>Board</title>
 </head>
 <body>
+  <p th:if="${account}" th:text="|안녕하세요, ${account}님.|"></p>
+
   <h1>정말 삭제하시겠습니까?</h1>
   <form method="post">
     <input type="submit" name="button" value="YES">

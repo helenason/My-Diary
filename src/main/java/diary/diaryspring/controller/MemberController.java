@@ -26,6 +26,9 @@ public class MemberController {
     private String dupMsg;
     private String chkMsg;
 
+    public static boolean isLogin;
+    public static String account;
+
     @GetMapping("/join")
     public String joinForm(Model model){ // 새로고침(F5)
         pass = 0;
@@ -100,11 +103,12 @@ public class MemberController {
 
             HttpSession session = request.getSession();
             session.setAttribute("member", loginMem);
+
+            model.addAttribute("account", loginMem.getName());
         }
         return "members/login";
-
     }
 
-    //logout 구현
+    //logout 구현 (my page)
 }
 

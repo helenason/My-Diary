@@ -5,6 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+
+    <p th:if="${account}" th:text="|안녕하세요, ${account}님.|"></p>
+
     <h1>기록의 힘</h1>
     <a href="members/join">회원가입</a><br>
     <a href="members/login">로그인</a><br>

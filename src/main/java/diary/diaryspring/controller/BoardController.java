@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/board")
@@ -22,15 +21,27 @@ public class BoardController {
     @Autowired BoardRepository br;
 
     @GetMapping("")
-    public String boardForm(Model model) {
+    public String boardForm(HttpServletRequest request,
+                            Model model) {
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("account", member.getName());
+
         List<Board> boardList = br.findAll();
         model.addAttribute("boardList", boardList);
         return "board/board";
     }
     @PostMapping("")
-    public String searchBoard(Model model,
+    public String searchBoard(HttpServletRequest request,
+                              Model model,
                               @RequestParam("searchType") String type,
                               @RequestParam("search") String search) {
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("account", member.getName());
+
         List<Board> result;
         if (type.equals("제목")) {
             result = br.findByTitle(search).orElse(null);
@@ -42,7 +53,13 @@ public class BoardController {
     }
 
     @GetMapping("/write")
-    public String writeForm(Model model) {
+    public String writeForm(Model model,
+                            HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("account", member.getName());
+
         model.addAttribute("board", new Board());
         return "board/write";
     }
@@ -50,13 +67,14 @@ public class BoardController {
     @PostMapping("/write")
     public String writeBoard(Model model,
                            HttpServletRequest request,
-//                           HttpSession session,
                            @ModelAttribute Board board,
                            @RequestParam("button") String btn) {
-        if (btn.equals("게시")) {
-            HttpSession session = request.getSession();
-            Member member = (Member) session.getAttribute("member");
 
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("account", member.getName());
+
+        if (btn.equals("게시")) {
             board.setWriter(member.getName());
             board.setDate();
 
@@ -68,7 +86,12 @@ public class BoardController {
 
     @GetMapping("/post")
     public String postForm(Model model,
-                           @RequestParam("id") int id) {
+                           @RequestParam("id") int id,
+                           HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("account", member.getName());
 
         Board findPost = br.findById(id).orElse(null);
         model.addAttribute("board", findPost);
@@ -96,7 +119,13 @@ public class BoardController {
 
     @GetMapping("/post/edit")
     public String editFrom(Model model,
-                           @RequestParam("id") int id) {
+                           @RequestParam("id") int id,
+                           HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("account", member.getName());
+
         Board findPost = br.findById(id).orElse(null);
         model.addAttribute("board", findPost);
         return "board/edit";
@@ -104,7 +133,13 @@ public class BoardController {
     @PostMapping("/post/edit")
     public String editBoard(Model model,
                             @RequestParam("id") int id,
-                            @ModelAttribute Board newBoard) {
+                            @ModelAttribute Board newBoard,
+                            HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("account", member.getName());
+
         String newTitle = newBoard.getTitle();
         String newContent = newBoard.getContent();
 
@@ -117,12 +152,25 @@ public class BoardController {
     }
 
     @GetMapping("/post/erase")
-    public String eraseFrom() {
+    public String eraseFrom(Model model,
+                            HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("account", member.getName());
+
         return "board/erase";
     }
     @PostMapping("/post/erase")
-    public String eraseBoard(@RequestParam("id") int id,
-                             @RequestParam("button") String btn) {
+    public String eraseBoard(Model model,
+                             @RequestParam("id") int id,
+                             @RequestParam("button") String btn,
+                             HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("account", member.getName());
+
         if (btn.equals("YES")) {
             Board erasePost = br.findById(id).orElse(null);
             bs.erase(erasePost);

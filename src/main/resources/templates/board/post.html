@@ -5,6 +5,8 @@
   <title>Board</title>
 </head>
 <body>
+    <p th:if="${account}" th:text="|안녕하세요, ${account}님.|"></p>
+
 <!--  <form th:action="@{/board/post/edit(id=${board.id})}" method="post">-->
     <input type="button" name="button" value="수정"
            th:onclick="|location.href='@{post/edit(id=${board.id})}'|">
