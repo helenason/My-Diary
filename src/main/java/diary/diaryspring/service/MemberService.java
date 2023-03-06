@@ -45,4 +45,8 @@ public class MemberService {
             return "없는 계정";
         }
     }
+
+    public void changePw(String pwNow, String pwChange) {
+        mr.updatePw(pwNow, pwChange);
+    }
 }

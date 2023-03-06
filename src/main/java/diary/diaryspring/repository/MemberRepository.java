@@ -51,6 +51,10 @@ public class MemberRepository {
         return jt.query("SELECT * FROM members", memberRowMapper());
     }
 
+    public void updatePw(String from, String to) {
+        jt.update("UPDATE members SET pw = ? WHERE pw = ?", to, from);
+    }
+
     private RowMapper<Member> memberRowMapper() { // ResultSet -> Member()
         return (rs, rowNum) -> {
             Member member = new Member();

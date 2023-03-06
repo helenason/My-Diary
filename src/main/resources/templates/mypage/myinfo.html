@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>나의 계정 정보</title>
+</head>
+<body>
+    <div th:object="${member}">
+        <label>아이디 : </label>
+        <span th:text="*{id}"></span><br>
+
+        <label>이름 : </label>
+        <span th:text="*{name}"></span>
+    </div>
+    <form method="post">
+        <p>비밀번호 변경하기</p>
+        <label>현재 비밀번호</label>
+        <input type="password" name="pwNow"/><br>
+        <label>변경할 비밀번호</label>
+        <input type="password" name="pwChange"/><br>
+        <label>비밀번호 확인</label>
+        <input type="password" name="pwChangeChk"/><br>
+        <input type="submit" name="btn" value="변경"/>
+    </form>
+    <p th:text="${msg}"></p>
+</body>
+</html>
