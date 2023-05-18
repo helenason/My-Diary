@@ -7,7 +7,7 @@
 <body>
     <p th:if="${account}" th:text="|안녕하세요, ${account}님.|"></p>
 
-    <h1>오늘의 일기 작성하기</h1>
+    <h1>글 작성하기</h1>
     <form th:action="@{/board/write}" th:object="${board}" method="post">
         <label th:for="title">제목</label>
         <input type="text" th:field="*{title}" placeholder="제목을 입력하세요."><br>

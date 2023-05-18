@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,10 +8,26 @@
 
     <p th:if="${account}" th:text="|안녕하세요, ${account}님.|"></p>
 
-    <h1>기록의 힘</h1>
-    <a href="members/join">회원가입</a><br>
-    <a href="members/login">로그인</a><br>
-    <a href="">새 글 작성</a><br>
-    글목록 (글1, 글2, 글3 ,,,)
+    <div th:if="${logState==0}">
+        <p><a href="members/login">로그인</a></p>
+        <p><a href="members/join">회원가입</a></p>
+    </div>
+    <div th:unless="${logState==0}">
+        <form id="post_form" th:action="@{members/logout}" method="POST">
+<!--            <input type="submit">로그아웃</input>-->
+            <a href="#" onclick="submit_form()">로그아웃</a>
+        </form>
+    </div>
+
+    <p><a href="board/write">글 쓰기</a></p>
+    <p><a href="board">글 목록</a></p>
+
+
+    <script>
+        function submit_form() {
+            var form = document.getElementById("post_form");
+            form.submit();
+        }
+    </script>
 </body>
 </html>

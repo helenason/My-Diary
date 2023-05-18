@@ -100,6 +100,9 @@ public class MemberController {
             Member loginMem = mr.findById(member.getId()).orElse(null);
 
             HttpSession session = request.getSession();
+
+            session.setMaxInactiveInterval(1800); // 세션 유지 기간 30min
+
             session.setAttribute("member", loginMem);
 
             model.addAttribute("account", loginMem.getName());
@@ -107,6 +110,12 @@ public class MemberController {
         return "members/login";
     }
 
-    //logout 구현 (my page)
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        request.getSession(true);
+        // invalidate()만 쓰면, 이번 요청에서는 session을 무효화 처리 할 수 있지만 사용자가 요청을 또 보내면 모든 정보가 그대로 남아있음
+        return "redirect:/";
+    }
 }
 

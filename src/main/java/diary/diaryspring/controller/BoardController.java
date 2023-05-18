@@ -26,7 +26,11 @@ public class BoardController {
 
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("member");
-        model.addAttribute("account", member.getName());
+        if (member == null) {
+            model.addAttribute("account", "익명");
+        } else {
+            model.addAttribute("account", member.getName());
+        }
 
         List<Board> boardList = br.findAll();
         model.addAttribute("boardList", boardList);
@@ -58,6 +62,10 @@ public class BoardController {
 
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("member");
+        if (member == null) {
+            model.addAttribute("action", "글 작성 기능");
+            return "noAccess";
+        }
         model.addAttribute("account", member.getName());
 
         model.addAttribute("board", new Board());
@@ -91,6 +99,10 @@ public class BoardController {
 
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("member");
+        if (member == null) {
+            model.addAttribute("action", "글 조회 기능");
+            return "noAccess";
+        }
         model.addAttribute("account", member.getName());
 
         Board findPost = br.findById(id).orElse(null);
@@ -124,6 +136,10 @@ public class BoardController {
 
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("member");
+        if (member == null) {
+            model.addAttribute("action", "글 수정 기능");
+            return "noAccess";
+        }
         model.addAttribute("account", member.getName());
 
         Board findPost = br.findById(id).orElse(null);
@@ -157,6 +173,10 @@ public class BoardController {
 
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute("member");
+        if (member == null) {
+            model.addAttribute("action", "글 삭제 기능");
+            return "noAccess";
+        }
         model.addAttribute("account", member.getName());
 
         return "board/erase";
