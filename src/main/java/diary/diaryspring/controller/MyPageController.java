@@ -56,6 +56,6 @@ public class MyPageController {
 
         model.addAttribute("member", account);
         model.addAttribute("msg", message);
-        return "mypage/myinfo";
+        return "redirect:/";
     }
 }

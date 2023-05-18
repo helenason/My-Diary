@@ -87,7 +87,7 @@ public class BoardController {
             board.setDate();
 
             bs.write(board);
-            System.out.println("게시 성공");
+//            System.out.println("게시 성공");
         }
         return "redirect:/board";
     }

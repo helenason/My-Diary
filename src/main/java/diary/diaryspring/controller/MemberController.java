@@ -74,7 +74,7 @@ public class MemberController {
         } else { // 가입 버튼
             pass = 0;
             ms.join(member);
-            System.out.println("가입 성공");
+//            System.out.println("가입 성공");
             model.addAttribute("move", true);
         }
         model.addAttribute("pass", pass);

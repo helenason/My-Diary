@@ -13,6 +13,7 @@
         <p><a href="members/join">회원가입</a></p>
     </div>
     <div th:unless="${logState==0}">
+        <p><a href="mypage/myinfo">비밀번호 변경</a></p>
         <form id="post_form" th:action="@{members/logout}" method="POST">
 <!--            <input type="submit">로그아웃</input>-->
             <a href="#" onclick="submit_form()">로그아웃</a>
